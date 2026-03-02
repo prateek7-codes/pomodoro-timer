@@ -227,8 +227,6 @@ body[data-theme="dark"] .mode-switch__option.is-active { background: rgba(248, 2
 .button--primary { background: var(--button-primary); color: var(--button-primary-text); }
 .button--ghost { background: var(--button-ghost); color: var(--text-primary); border: 1px solid var(--divider); }
 
-.insights { display: grid; gap: var(--space-2); position: relative; z-index: 2; }
-.insight { margin: 0; color: var(--text-muted); }
 
 .overlay {
   position: fixed;
@@ -276,6 +274,30 @@ body[data-theme="dark"] .mode-switch__option.is-active { background: rgba(248, 2
 }
 
 .side-panel__content { overflow-y: auto; display: grid; gap: var(--space-4); }
+
+.hero-stat {
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  display: grid;
+  gap: var(--space-1);
+}
+
+.hero-stat__label {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.hero-stat__value {
+  margin: 0;
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
 .panel-highlight { font-size: 1.08rem; font-weight: 600; margin: 0; }
 
 .progress-block { display: grid; gap: var(--space-2); }

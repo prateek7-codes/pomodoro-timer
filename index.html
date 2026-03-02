@@ -73,12 +73,6 @@
             <button class="button button--ghost" id="resetButton" type="button">Reset</button>
           </div>
         </section>
-
-        <section class="insights" aria-label="Live productivity summary">
-          <p class="insight" id="focusTimeText">You've focused for 0 minutes today.</p>
-          <p class="insight" id="sessionsText">Sessions completed: 0</p>
-          <p class="insight" id="streakText">Daily streak: 0 days</p>
-        </section>
       </main>
 
       <aside class="side-panel" id="statsPanel" aria-labelledby="statsPanelTitle" aria-hidden="true">
@@ -87,6 +81,10 @@
           <button class="panel-close" data-close-panel type="button" aria-label="Close stats panel">×</button>
         </div>
         <div class="side-panel__content">
+          <div class="hero-stat">
+            <p class="hero-stat__label">Focus time today</p>
+            <p class="hero-stat__value" id="statsFocusMinutes">0 min</p>
+          </div>
           <p class="panel-highlight" id="statsFocus">You've focused for 0 minutes today.</p>
           <p id="statsSessions">Sessions completed: 0</p>
           <p id="statsStreak">Daily streak: 0 days</p>

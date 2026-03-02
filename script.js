@@ -50,9 +50,6 @@
         modeButtons: [...document.querySelectorAll(".mode-switch__option")],
         startPauseButton: document.getElementById("startPauseButton"),
         resetButton: document.getElementById("resetButton"),
-        focusTimeText: document.getElementById("focusTimeText"),
-        sessionsText: document.getElementById("sessionsText"),
-        streakText: document.getElementById("streakText"),
         themeToggle: document.getElementById("themeToggle"),
         toast: document.getElementById("toast"),
         toastMessage: document.getElementById("toastMessage"),
@@ -65,6 +62,7 @@
         panelCloseButtons: [...document.querySelectorAll("[data-close-panel]")],
 
         statsFocus: document.getElementById("statsFocus"),
+        statsFocusMinutes: document.getElementById("statsFocusMinutes"),
         statsSessions: document.getElementById("statsSessions"),
         statsStreak: document.getElementById("statsStreak"),
         statsWeekly: document.getElementById("statsWeekly"),
@@ -350,10 +348,7 @@
       const sessionsText = `Sessions completed: ${stats.sessionsCompletedToday}`;
       const streakText = `Daily streak: ${stats.streakDays} day${stats.streakDays === 1 ? "" : "s"}`;
 
-      this.elements.focusTimeText.textContent = focusText;
-      this.elements.sessionsText.textContent = sessionsText;
-      this.elements.streakText.textContent = streakText;
-
+      this.elements.statsFocusMinutes.textContent = `${focusToday} min`;
       this.elements.statsFocus.textContent = focusText;
       this.elements.statsSessions.textContent = sessionsText;
       this.elements.statsStreak.textContent = streakText;
