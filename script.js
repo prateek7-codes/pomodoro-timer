@@ -48,6 +48,7 @@
       this.loadAppState();
       this.updateModeUI();
       this.updateDisplay();
+      this.updateModeIndicator();
       this.updateStats();
       this.populateSettings();
       this.applyTheme(this.state.settings.darkMode ? "dark" : "light");
@@ -62,6 +63,8 @@
         timer: document.getElementById("timer"),
         modeLabel: document.getElementById("modeLabel"),
         progressCircle: document.getElementById("progressCircle"),
+        modeSwitch: document.getElementById("modeSwitch"),
+        modeIndicator: document.getElementById("modeIndicator"),
         modeButtons: [...document.querySelectorAll(".mode-btn")],
         startBtn: document.getElementById("startBtn"),
         resetBtn: document.getElementById("resetBtn"),
@@ -126,6 +129,8 @@
         this.showToast("Settings saved.");
       });
 
+      window.addEventListener("resize", () => this.updateModeIndicator());
+
       this.el.resetDefaultsButton.addEventListener("click", () => {
         this.state.settings = { ...DEFAULT_SETTINGS };
         this.populateSettings();
@@ -141,6 +146,7 @@
       this.state.isRunning = true;
       this.state.endAt = Date.now() + this.state.remainingTime * 1000;
       this.updateStartPause();
+      this.el.timerWrap.classList.remove("is-complete");
       this.enterFocusMode();
       this.saveAppState();
 
@@ -190,6 +196,7 @@
       this.clearTimer();
       this.state.remainingTime = this.durations()[mode];
       this.updateModeUI();
+      this.updateModeIndicator();
       this.updateStartPause();
       this.updateDisplay();
       this.exitFocusMode();
@@ -211,7 +218,11 @@
       this.state.currentMode = next;
       this.state.remainingTime = this.durations()[next];
       this.updateModeUI();
+      this.updateModeIndicator();
+      this.updateDisplay();
       this.updateStartPause();
+      this.el.timerWrap.classList.add("is-complete");
+      setTimeout(() => this.el.timerWrap.classList.remove("is-complete"), 650);
       this.exitFocusMode();
       this.updateStats();
       this.saveAppState();
@@ -251,6 +262,16 @@
       });
     }
 
+    updateModeIndicator() {
+      const active = this.el.modeButtons.find((b) => b.classList.contains("is-active"));
+      if (!active || !this.el.modeIndicator || !this.el.modeSwitch) return;
+      const switchRect = this.el.modeSwitch.getBoundingClientRect();
+      const activeRect = active.getBoundingClientRect();
+      const x = activeRect.left - switchRect.left;
+      this.el.modeIndicator.style.width = `${activeRect.width}px`;
+      this.el.modeIndicator.style.transform = `translateX(${x}px)`;
+    }
+
     updateStartPause() {
       this.el.startBtn.textContent = this.state.isRunning ? "Pause" : "Start";
     }
@@ -265,6 +286,7 @@
       this.el.panelOverlay.hidden = false;
       requestAnimationFrame(() => this.el.panelOverlay.classList.add("is-visible"));
       this.el.body.classList.add("no-scroll");
+      this.el.body.classList.add("panel-open");
       if (kind === "stats") this.updateStats();
       if (kind === "settings") this.populateSettings();
     }
@@ -276,6 +298,7 @@
       this.el.settingsPanel.setAttribute("aria-hidden", "true");
       this.el.panelOverlay.classList.remove("is-visible");
       this.el.body.classList.remove("no-scroll");
+      this.el.body.classList.remove("panel-open");
       setTimeout(() => {
         if (!this.el.panelOverlay.classList.contains("is-visible")) this.el.panelOverlay.hidden = true;
       }, 360);
