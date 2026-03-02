@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FocusFlow — Elite Pomodoro Workspace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body data-theme="light" data-mode="pomodoro">
+    <div class="app-shell" id="appShell">
+      <header class="top-nav" id="topNav">
+        <div class="brand" aria-label="FocusFlow brand identity">
+          <span class="brand__icon" aria-hidden="true">⚡</span>
+          <span class="brand__name">FocusFlow</span>
+        </div>
+        <nav class="top-nav__menu" aria-label="Application actions">
+          <button class="nav-link" id="statsButton" type="button">Stats</button>
+          <button class="nav-link" id="settingsButton" type="button">Settings</button>
+          <button
+            class="theme-toggle"
+            id="themeToggle"
+            type="button"
+            role="switch"
+            aria-checked="false"
+            aria-label="Toggle dark mode"
+          >
+            <span class="theme-toggle__thumb"></span>
+          </button>
+        </nav>
+      </header>
+
+      <main class="focus-main" id="focusMain">
+        <section class="timer-card" aria-labelledby="timerTitle">
+          <h1 class="sr-only" id="timerTitle">FocusFlow timer</h1>
+
+          <div class="timer-wrap" id="timerWrap">
+            <svg class="timer-ring" viewBox="0 0 240 240" aria-hidden="true">
+              <defs>
+                <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="var(--ring-start)" />
+                  <stop offset="100%" stop-color="var(--ring-end)" />
+                </linearGradient>
+              </defs>
+              <circle class="timer-ring__track" cx="120" cy="120" r="104"></circle>
+              <circle class="timer-ring__progress" id="progressCircle" cx="120" cy="120" r="104"></circle>
+            </svg>
+            <div class="timer-content">
+              <p class="mode-label" id="modeLabel">Pomodoro</p>
+              <p class="timer-display" id="timerDisplay" aria-live="polite">25:00</p>
+            </div>
+          </div>
+
+          <div class="mode-switch" role="tablist" aria-label="Timer mode switcher">
+            <button class="mode-switch__option is-active" data-mode="pomodoro" type="button" role="tab" aria-selected="true">
+              Pomodoro
+            </button>
+            <button class="mode-switch__option" data-mode="shortBreak" type="button" role="tab" aria-selected="false">
+              Short Break
+            </button>
+            <button class="mode-switch__option" data-mode="longBreak" type="button" role="tab" aria-selected="false">
+              Long Break
+            </button>
+          </div>
+
+          <div class="actions">
+            <button class="button button--primary" id="startPauseButton" type="button">Start</button>
+            <button class="button button--ghost" id="resetButton" type="button">Reset</button>
+          </div>
+        </section>
+
+        <section class="insights" aria-label="Live productivity summary">
+          <p class="insight" id="focusTimeText">You've focused for 0 minutes today.</p>
+          <p class="insight" id="sessionsText">Sessions completed: 0</p>
+          <p class="insight" id="streakText">Daily streak: 0 days</p>
+        </section>
+      </main>
+
+      <aside class="side-panel" id="statsPanel" aria-labelledby="statsPanelTitle" aria-hidden="true">
+        <div class="side-panel__header">
+          <h2 id="statsPanelTitle">Productivity insights</h2>
+          <button class="panel-close" data-close-panel type="button" aria-label="Close stats panel">×</button>
+        </div>
+        <div class="side-panel__content">
+          <p class="panel-highlight" id="statsFocus">You've focused for 0 minutes today.</p>
+          <p id="statsSessions">Sessions completed: 0</p>
+          <p id="statsStreak">Daily streak: 0 days</p>
+          <p id="statsWeekly">Weekly focus time: 0 minutes</p>
+
+          <div class="progress-block" aria-label="Daily goal progress">
+            <div class="progress-block__meta">
+              <span>Daily focus goal</span>
+              <span id="dailyGoalMeta">0%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="dailyGoalFill"></div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <aside class="side-panel" id="settingsPanel" aria-labelledby="settingsPanelTitle" aria-hidden="true">
+        <div class="side-panel__header">
+          <h2 id="settingsPanelTitle">Settings</h2>
+          <button class="panel-close" data-close-panel type="button" aria-label="Close settings panel">×</button>
+        </div>
+        <form class="side-panel__content settings-form" id="settingsForm">
+          <label class="field">
+            <span>Focus duration (minutes)</span>
+            <input id="focusDurationInput" name="focusDuration" type="number" min="1" max="120" step="1" required />
+          </label>
+          <label class="field">
+            <span>Short break duration (minutes)</span>
+            <input id="shortBreakDurationInput" name="shortBreakDuration" type="number" min="1" max="60" step="1" required />
+          </label>
+          <label class="field">
+            <span>Long break duration (minutes)</span>
+            <input id="longBreakDurationInput" name="longBreakDuration" type="number" min="1" max="120" step="1" required />
+          </label>
+
+          <label class="toggle-row" for="soundToggleInput">
+            <span>Completion sound</span>
+            <input id="soundToggleInput" type="checkbox" />
+          </label>
+          <label class="toggle-row" for="darkModeToggleInput">
+            <span>Dark mode</span>
+            <input id="darkModeToggleInput" type="checkbox" />
+          </label>
+
+          <div class="panel-actions">
+            <button class="button button--primary" type="submit">Save settings</button>
+            <button class="button button--ghost" id="resetDefaultsButton" type="button">Reset to defaults</button>
+          </div>
+        </form>
+      </aside>
+
+      <div class="overlay" id="panelOverlay" hidden></div>
+
+      <div class="toast" id="toast" role="status" aria-live="polite" aria-hidden="true">
+        <p id="toastMessage">Session complete.</p>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
