@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FocusFlow — Premium Pomodoro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body data-theme="light" data-mode="pomodoro">
+    <div class="app-shell">
+      <header class="top-nav" id="topNav">
+        <div class="brand"><span>⚡</span><span>FocusFlow</span></div>
+        <nav class="top-nav__menu" aria-label="Main actions">
+          <button class="nav-link" id="statsButton" type="button">Stats</button>
+          <button class="nav-link" id="settingsButton" type="button">Settings</button>
+          <button id="themeToggle" class="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Toggle dark mode">
+            <span class="theme-toggle__thumb"></span>
+          </button>
+        </nav>
+      </header>
+
+      <main class="focus-main">
+        <section class="timer-card" aria-label="Pomodoro timer">
+          <div class="timer-wrap" id="timerWrap">
+            <svg class="timer-ring" viewBox="0 0 240 240" aria-hidden="true">
+              <defs>
+                <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="var(--ring-start)" />
+                  <stop offset="100%" stop-color="var(--ring-end)" />
+                </linearGradient>
+              </defs>
+              <circle class="timer-ring__track" cx="120" cy="120" r="104"></circle>
+              <circle class="timer-ring__progress" id="progressCircle" cx="120" cy="120" r="104"></circle>
+            </svg>
+            <div class="timer-content">
+              <p class="mode-label" id="modeLabel">Pomodoro</p>
+              <p id="timer" class="timer-display" aria-live="polite">25:00</p>
+            </div>
+          </div>
+
+          <div class="mode-switch" id="modeSwitch" role="tablist" aria-label="Timer mode">
+            <span class="mode-indicator" id="modeIndicator" aria-hidden="true"></span>
+            <button class="mode-btn is-active" data-mode="pomodoro" type="button" role="tab" aria-selected="true">Pomodoro</button>
+            <button class="mode-btn" data-mode="short" type="button" role="tab" aria-selected="false">Short Break</button>
+            <button class="mode-btn" data-mode="long" type="button" role="tab" aria-selected="false">Long Break</button>
+          </div>
+
+          <div class="actions">
+            <button id="startBtn" class="button button--primary" type="button">Start</button>
+            <button id="resetBtn" class="button button--ghost" type="button">Reset</button>
+          </div>
+        </section>
+      </main>
+
+      <aside class="side-panel" id="statsPanel" aria-hidden="true">
+        <div class="side-panel__header">
+          <h2>Productivity Insights</h2>
+          <button class="panel-close" data-close-panel type="button" aria-label="Close">×</button>
+        </div>
+        <div class="side-panel__content">
+          <div class="hero-stat">
+            <p class="hero-stat__label">Focus time today</p>
+            <p class="hero-stat__value" id="focusTime">0 min</p>
+          </div>
+          <p id="sessionsCount">Sessions completed: 0</p>
+          <p id="streakCount">Daily streak: 0 days</p>
+          <p id="weeklyFocus">Weekly focus time: 0 minutes</p>
+          <div class="progress-block">
+            <div class="progress-block__meta"><span>Daily focus goal</span><span id="dailyGoal">0%</span></div>
+            <div class="progress-track"><div class="progress-fill" id="dailyGoalFill"></div></div>
+          </div>
+        </div>
+      </aside>
+
+      <aside class="side-panel" id="settingsPanel" aria-hidden="true">
+        <div class="side-panel__header">
+          <h2>Settings</h2>
+          <button class="panel-close" data-close-panel type="button" aria-label="Close">×</button>
+        </div>
+        <form id="settingsForm" class="side-panel__content">
+          <label class="field"><span>Focus duration</span><input id="focusInput" type="number" min="1" max="120" required /></label>
+          <label class="field"><span>Short break duration</span><input id="shortInput" type="number" min="1" max="60" required /></label>
+          <label class="field"><span>Long break duration</span><input id="longInput" type="number" min="1" max="120" required /></label>
+          <label class="toggle-row"><span>Completion sound</span><input id="soundToggle" type="checkbox" /></label>
+          <label class="toggle-row"><span>Dark mode</span><input id="darkToggle" type="checkbox" /></label>
+          <div class="panel-actions">
+            <button class="button button--primary" type="submit">Save</button>
+            <button class="button button--ghost" id="resetDefaultsButton" type="button">Reset defaults</button>
+          </div>
+        </form>
+      </aside>
+
+      <div id="panelOverlay" class="overlay" hidden></div>
+      <div id="toast" class="toast" aria-hidden="true"><p id="toastMessage">Done.</p></div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
